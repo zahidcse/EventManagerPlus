@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Manager Free — Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h1>Event Manager Free</h1>
+            <p>Installation &amp; User Guide</p>
+        </div>
+        <nav>
+            <ul>
+                <li class="nav-group">Getting Started</li>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#requirements">Requirements</a></li>
+                <li><a href="#file-structure">File Structure</a></li>
+                <li class="nav-group">Installation</li>
+                <li><a href="#quick-install">Web Installer</a></li>
+                <li><a href="#manual-install">Manual Installation</a></li>
+                <li><a href="#server-config">Server Configuration</a></li>
+                <li class="nav-group">Configuration</li>
+                <li><a href="#admin-panel">Admin Panel</a></li>
+                <li><a href="#events">Managing Events</a></li>
+                <li><a href="#payments">Payment Gateways</a></li>
+                <li><a href="#email">Email (SMTP)</a></li>
+                <li><a href="#seat-planner">Seat Planner</a></li>
+                <li><a href="#ai-features">AI Features</a></li>
+                <li class="nav-group">Frontend</li>
+                <li><a href="#customer-account">Customer Account</a></li>
+                <li><a href="#themes">Frontend Themes</a></li>
+                <li class="nav-group">Help</li>
+                <li><a href="#cron">Cron &amp; Queues</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#changelog">Changelog</a></li>
+                <li><a href="#support">Support &amp; Credits</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header class="doc-hero">
+            <h1>Event Manager Free</h1>
+            <p class="meta">Complete documentation for installation, configuration, and daily use.<br>
+            Version 1.0 &nbsp;|&nbsp; Laravel 12 &nbsp;|&nbsp; PHP 8.2+ &nbsp;|&nbsp;
+            <a href="https://lucrativeit.com/products/event-manager-plus" target="_blank" rel="noopener">Purchase Pro</a></p>
+        </header>
+
+        <!-- INTRODUCTION -->
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p><strong>Event Manager Free</strong> is the open-source edition of our event management and ticketing platform built with Laravel. It lets you create and publish single events, sell tickets online via Stripe, manage bookings, and run your site from a modern admin dashboard.</p>
+            <p>Some features (extra themes, seat plans, recurring events, PDF ticket customization, attendee forms, and additional payment gateways) are preview-only in this edition. Upgrade to <a href="https://lucrativeit.com/products/event-manager-plus" target="_blank" rel="noopener"><strong>Event Manager Plus</strong></a> to unlock the full product.</p>
+
+            <h3>What You Get</h3>
+            <ul>
+                <li>Complete Laravel source code</li>
+                <li>Web-based installation wizard (<code>/install</code>)</li>
+                <li>Admin dashboard at <code>/admin</code></li>
+                <li>Public event listing, booking, blog, and CMS pages</li>
+                <li>Multiple payment gateways (Stripe, PayPal, Razorpay, SSLCommerz, cash, bank transfer)</li>
+                <li>PDF ticket generation with QR codes</li>
+                <li>Seat planner integration (optional)</li>
+                <li>AI report assistant and event assistant (optional)</li>
+            </ul>
+
+            <div class="alert alert-info">
+                <strong>Demo access:</strong> After installation, sign in to the admin panel at <code>your-domain.com/admin/login</code> using the administrator credentials you set during setup.
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section id="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card"><strong>Event Management</strong>Create single or recurring events with venue, online, or hybrid locations.</div>
+                <div class="feature-card"><strong>Ticket Types</strong>Multiple ticket tiers, early-bird pricing, coupons, and capacity limits.</div>
+                <div class="feature-card"><strong>Seat Planner</strong>Visual seat selection per event (optional, site-wide toggle).</div>
+                <div class="feature-card"><strong>Bookings</strong>Online checkout, admin manual registration, order groups, check-in.</div>
+                <div class="feature-card"><strong>PDF Tickets</strong>Customizable ticket PDFs with QR codes for validation.</div>
+                <div class="feature-card"><strong>Payments</strong>Stripe, PayPal, Razorpay, SSLCommerz, cash, bank transfer.</div>
+                <div class="feature-card"><strong>Organizers &amp; Speakers</strong>Assign organizers and speakers to events.</div>
+                <div class="feature-card"><strong>Blog &amp; Pages</strong>Built-in blog and static CMS pages.</div>
+                <div class="feature-card"><strong>Reports</strong>Order reports with CSV export and AI-powered queries.</div>
+                <div class="feature-card"><strong>Event Assistant</strong>AI helper to draft event content (when AI is configured).</div>
+                <div class="feature-card"><strong>Customer Accounts</strong>Registration, profile, order history, ticket downloads.</div>
+                <div class="feature-card"><strong>Themes</strong>Switch between Default and Classic frontend themes.</div>
+                <div class="feature-card"><strong>Site Settings</strong>Logo, favicon, hero image, social links, SMTP, payments.</div>
+                <div class="feature-card"><strong>Web Installer</strong>Guided setup with requirement checks and database migration.</div>
+            </div>
+        </section>
+
+        <!-- REQUIREMENTS -->
+        <section id="requirements">
+            <h2>Server Requirements</h2>
+            <p>Before installing, ensure your server meets the following requirements. The web installer will also verify these automatically.</p>
+
+            <table>
+                <thead>
+                    <tr><th>Requirement</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>PHP</td><td>8.2 or higher</td></tr>
+                    <tr><td>Database</td><td>MySQL 5.7+ or MariaDB 10.3+</td></tr>
+                    <tr><td>Web Server</td><td>Apache with <code>mod_rewrite</code> or Nginx</td></tr>
+                    <tr><td>Composer</td><td>Required for dependency installation</td></tr>
+                    <tr><td>Node.js &amp; npm</td><td>Required only if you rebuild frontend assets (<code>npm run build</code>)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Required PHP Extensions</h3>
+            <ul>
+                <li>ctype, fileinfo, json, mbstring, openssl, pdo, tokenizer, xml</li>
+                <li><strong>pdo_mysql</strong> (for MySQL/MariaDB database connection)</li>
+            </ul>
+
+            <h3>Writable Directories</h3>
+            <ul>
+                <li><code>storage/</code> and all subdirectories</li>
+                <li><code>bootstrap/cache/</code></li>
+                <li><code>public/uploads/</code> (created automatically for media uploads)</li>
+                <li><code>.env</code> file (or ability to create it from <code>.env.example</code>)</li>
+            </ul>
+
+            <div class="alert alert-warning">
+                <strong>Production tip:</strong> Set <code>APP_DEBUG=false</code> and <code>APP_ENV=production</code> in <code>.env</code> after installation. The web installer does this automatically.
+            </div>
+        </section>
+
+        <!-- FILE STRUCTURE -->
+        <section id="file-structure">
+            <h2>File Structure</h2>
+            <p>Key directories and files you should know about:</p>
+            <pre><code>EventManagerLaravel/
+├── app/                    # Application logic (controllers, models, services)
+├── bootstrap/              # Framework bootstrap &amp; cache
+├── config/                 # Configuration files
+├── database/
+│   ├── migrations/         # Database schema
+│   └── seeders/            # Default data (admin user, settings)
+├── public/                 # Web root (point your domain here)
+│   ├── index.php           # Front controller
+│   ├── documentation/      # This documentation
+│   │   └── assets/images/  # Screenshots used in this guide
+│   ├── themes/             # Frontend theme assets
+│   └── uploads/            # User-uploaded images
+├── resources/views/        # Blade templates
+├── routes/web.php          # Application routes
+├── storage/                # Logs, cache, sessions (must be writable)
+├── .env                    # Environment configuration (created on install)
+├── .env.example            # Environment template
+├── artisan                 # CLI commands
+└── composer.json           # PHP dependencies</code></pre>
+
+            <div class="alert alert-info">
+                <strong>Document root:</strong> For shared hosting, point your domain's document root to the <code>public/</code> folder. If you cannot change the document root, use the included root <code>.htaccess</code> file which redirects requests to <code>public/</code>.
+            </div>
+        </section>
+
+        <!-- WEB INSTALLER -->
+        <section id="quick-install">
+            <h2>Installation — Web Installer</h2>
+            <p>The recommended way to install Event Manager Free is through the built-in web installer.</p>
+
+            <ol class="steps">
+                <li>
+                    <strong>Upload files</strong>
+                    <p>Upload all project files to your server. Ensure <code>storage/</code> and <code>bootstrap/cache/</code> are writable (chmod 755 or 775).</p>
+                </li>
+                <li>
+                    <strong>Install Composer dependencies</strong>
+                    <p>SSH into your server and run:</p>
+                    <pre><code>cd /path/to/your/project
+composer install --no-dev --optimize-autoloader</code></pre>
+                    <p>For local development you may omit <code>--no-dev</code>.</p>
+                </li>
+                <li>
+                    <strong>Create database</strong>
+                    <p>Create an empty MySQL or MariaDB database and note the host, port, database name, username, and password.</p>
+                </li>
+                <li>
+                    <strong>Open the installer</strong>
+                    <p>Visit <code>https://your-domain.com/install</code> in your browser. The installer checks PHP version, extensions, and folder permissions.</p>
+                </li>
+                <li>
+                    <strong>Configure the application</strong>
+                    <p>On the setup page, enter:</p>
+                    <ul>
+                        <li>Application name and URL (must match exactly how users access the site, including <code>https://</code> and port if any)</li>
+                        <li>Administrator name, email, and password</li>
+                        <li>Database connection details (MySQL or MariaDB)</li>
+                    </ul>
+                    <p>Optionally check <strong>"Erase existing tables"</strong> only if you are reinstalling on a database that already has old tables from a previous install.</p>
+                </li>
+                <li>
+                    <strong>Complete installation</strong>
+                    <p>Click <strong>Run installation</strong>. The installer will write <code>.env</code>, run migrations, seed default data, and lock the installer. Save the admin credentials shown on the completion screen.</p>
+                </li>
+                <li>
+                    <strong>Sign in</strong>
+                    <p>Go to <code>https://your-domain.com/admin/login</code> and sign in with your administrator account.</p>
+                    <figure class="doc-figure">
+                        <img src="assets/images/event_login.png" alt="Administrator sign-in page" class="doc-screenshot">
+                        <figcaption>Administrator sign-in at <code>/admin/login</code></figcaption>
+                    </figure>
+                </li>
+            </ol>
+
+            <div class="alert alert-danger">
+                <strong>Important:</strong> Do not refresh or open <code>/install/finish</code> directly. Always submit the form from the setup page. If you see a "Page Expired" (419) error, go back to <code>/install/setup</code> and try again.
+            </div>
+        </section>
+
+        <!-- MANUAL INSTALL -->
+        <section id="manual-install">
+            <h2>Installation — Manual (CLI)</h2>
+            <p>If you prefer command-line installation or the web installer is unavailable:</p>
+
+            <pre><code>cd /path/to/your/project
+composer install
+cp .env.example .env
+php artisan key:generate</code></pre>
+
+            <p>Edit <code>.env</code> and set at minimum:</p>
+            <pre><code>APP_NAME="Event Manager Free"
+APP_URL=https://your-domain.com
+APP_ENV=production
+APP_DEBUG=false
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+ADMIN_NAME="Admin User"
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=your_secure_password</code></pre>
+
+            <p>Then run migrations and seeders:</p>
+            <pre><code>php artisan migrate --force
+php artisan db:seed --force
+php artisan install:lock</code></pre>
+
+            <p>The <code>install:lock</code> command creates the install lock file so the web installer stays disabled on an already-configured site.</p>
+
+            <h3>Build Frontend Assets (Optional)</h3>
+            <p>Pre-built assets are included. Rebuild only if you modify CSS/JS:</p>
+            <pre><code>npm install
+npm run build</code></pre>
+        </section>
+
+        <!-- SERVER CONFIG -->
+        <section id="server-config">
+            <h2>Server Configuration</h2>
+
+            <h3>Apache</h3>
+            <p>Point the document root to the <code>public/</code> directory. Ensure <code>mod_rewrite</code> is enabled. The included <code>public/.htaccess</code> handles URL rewriting.</p>
+            <p>If the app is in a subfolder (e.g. <code>http://localhost/EventManagerLaravel/</code>), uncomment and set <code>RewriteBase</code> in the root <code>.htaccess</code>:</p>
+            <pre><code># RewriteBase /EventManagerLaravel/</code></pre>
+
+            <h3>Nginx</h3>
+            <pre><code>server {
+    listen 80;
+    server_name your-domain.com;
+    root /path/to/project/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}</code></pre>
+
+            <h3>APP_URL</h3>
+            <p><code>APP_URL</code> in <code>.env</code> must match the exact URL visitors use (scheme, host, and port). Payment return URLs and signed links depend on this value.</p>
+            <pre><code># Correct examples:
+APP_URL=https://yourdomain.com
+APP_URL=http://127.0.0.1:8000</code></pre>
+        </section>
+
+        <!-- ADMIN PANEL -->
+        <section id="admin-panel">
+            <h2>Admin Panel</h2>
+            <p>Access the admin dashboard at <code>/admin/login</code>. After signing in, you will see the main navigation:</p>
+
+            <figure class="doc-figure">
+                <img src="assets/images/dashboard1.png" alt="Admin dashboard overview" class="doc-screenshot">
+                <figcaption>Dashboard overview — events, registrations, capacity, and revenue</figcaption>
+            </figure>
+
+            <table>
+                <thead>
+                    <tr><th>Section</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Dashboard</td><td>Overview of events, bookings, and recent activity</td></tr>
+                    <tr><td>Events</td><td>Create, edit, publish events; manage tickets, media, speakers</td></tr>
+                    <tr><td>Event Categories</td><td>Organize events by category</td></tr>
+                    <tr><td>Organizers</td><td>Manage event organizer profiles</td></tr>
+                    <tr><td>Speakers</td><td>Reusable speaker profiles linked to events</td></tr>
+                    <tr><td>Blog</td><td>Publish blog posts on the public site</td></tr>
+                    <tr><td>Pages</td><td>Static CMS pages (About, Terms, etc.)</td></tr>
+                    <tr><td>Team</td><td>Staff accounts, roles, and module access</td></tr>
+                    <tr><td>Reports</td><td>Classic report filters and CSV export; optional AI report</td></tr>
+                    <tr><td>Report AI</td><td>Natural-language queries over booking data</td></tr>
+                    <tr><td>Event Assistant</td><td>AI helper for drafting event content</td></tr>
+                    <tr><td>Settings</td><td>Site, email, payments, and AI configuration</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Settings Sections</h3>
+            <ul>
+                <li><strong>Site</strong> — Public theme, logo, favicon, seat planner toggle, contact details</li>
+                <li><strong>Home</strong> — Homepage SEO, hero image, how-it-works, FAQs, and contact copy</li>
+                <li><strong>Admin</strong> — Admin panel branding (logo)</li>
+                <li><strong>Email</strong> — SMTP host, port, credentials, from address</li>
+                <li><strong>Payments</strong> — Enable/disable gateways and enter API keys</li>
+                <li><strong>AI Reports</strong> — Configure AI provider for Report AI and Event Assistant</li>
+            </ul>
+
+            <h3>Events List</h3>
+            <figure class="doc-figure">
+                <img src="assets/images/event_list.png" alt="Manage events list" class="doc-screenshot">
+                <figcaption>Events list with filters, stats, and per-event registrations</figcaption>
+            </figure>
+
+            <h3>Reports</h3>
+            <p>Use <strong>Reports → Classic report</strong> to filter registrations and group orders by event, organizer, dates, payment status, and check-in. Export results to CSV when needed.</p>
+            <figure class="doc-figure">
+                <img src="assets/images/calssic_report.png" alt="Classic report with registration filters" class="doc-screenshot">
+                <figcaption>Classic report — individual registrations and filters</figcaption>
+            </figure>
+
+            <h3>Blog &amp; Pages</h3>
+            <p>Create blog posts and static pages with a title, slug, rich-text body, hero image, and SEO meta fields.</p>
+            <figure class="doc-figure">
+                <img src="assets/images/blog.png" alt="Create blog post" class="doc-screenshot">
+                <figcaption>Blog post editor</figcaption>
+            </figure>
+            <figure class="doc-figure">
+                <img src="assets/images/pagees.png" alt="Create CMS page" class="doc-screenshot">
+                <figcaption>CMS page editor</figcaption>
+            </figure>
+
+            <h3>Team (Staff)</h3>
+            <p>Under <strong>Team</strong>, add staff users, assign roles, and control which modules each role can access.</p>
+            <figure class="doc-figure">
+                <img src="assets/images/staff.png" alt="Staff management" class="doc-screenshot">
+                <figcaption>Staff list with roles and permissions</figcaption>
+            </figure>
+        </section>
+
+        <!-- EVENTS -->
+        <section id="events">
+            <h2>Managing Events</h2>
+            <p>Events are created through a four-step wizard in the admin panel (<strong>Events → + Create Event</strong> or the sidebar button):</p>
+            <ol>
+                <li><strong>Basic info</strong> — Title, visibility, schedule (single, recurring, or custom dates), organizer, category, speakers, and location type (venue, virtual, or hybrid)</li>
+                <li><strong>Ticketing</strong> — Ticket types, pricing, quantities, early bird, sales end, and optional add-on services</li>
+                <li><strong>Content</strong> — Hero image, gallery, FAQs, description, and SEO meta</li>
+                <li><strong>Advanced</strong> — Confirmation email template, tax rules, per-customer limits, seat plan toggle, PDF ticket fields, then publish</li>
+            </ol>
+
+            <figure class="doc-figure">
+                <img src="assets/images/event_basic.png" alt="Event wizard — basic information" class="doc-screenshot">
+                <figcaption>Step 1 — Basic information</figcaption>
+            </figure>
+            <figure class="doc-figure">
+                <img src="assets/images/event_ticketing.png" alt="Event wizard — ticketing" class="doc-screenshot">
+                <figcaption>Step 2 — Ticket types and additional services</figcaption>
+            </figure>
+            <figure class="doc-figure">
+                <img src="assets/images/event_content.png" alt="Event wizard — content" class="doc-screenshot">
+                <figcaption>Step 3 — Hero image, gallery, and FAQs</figcaption>
+            </figure>
+            <figure class="doc-figure">
+                <img src="assets/images/event_advaced.png" alt="Event wizard — advanced settings" class="doc-screenshot">
+                <figcaption>Step 4 — Email template, tax rules, seat plan, and PDF ticket options</figcaption>
+            </figure>
+
+            <h3>Publishing</h3>
+            <p>Save as draft or click <strong>Publish</strong> to make the event visible on the public site at <code>/events/{slug}</code>.</p>
+
+            <h3>Bookings &amp; Check-in</h3>
+            <ul>
+                <li>View all bookings per event from the admin event bookings page</li>
+                <li>Manually register attendees from the admin panel</li>
+                <li>Each booking has a unique check-in URL token for scanning at the door</li>
+                <li>Customers receive PDF tickets with QR codes after successful payment</li>
+            </ul>
+
+            <h3>Ticket PDF Customization</h3>
+            <p>Per event, configure which fields appear on the PDF ticket (event name, attendee details, seat number, QR code, etc.) and upload an optional ticket logo.</p>
+        </section>
+
+        <!-- PAYMENTS -->
+        <section id="payments">
+            <h2>Payment Gateways</h2>
+            <p>Configure payments under <strong>Admin → Settings → Payment settings</strong>. Enable only the gateways you need.</p>
+
+            <figure class="doc-figure">
+                <img src="assets/images/payment_settings.png" alt="Payment gateway settings" class="doc-screenshot">
+                <figcaption>Payment settings — enable gateways and enter API credentials</figcaption>
+            </figure>
+
+            <h3>Stripe</h3>
+            <ol>
+                <li>Create a Stripe account at <a href="https://stripe.com" target="_blank" rel="noopener">stripe.com</a></li>
+                <li>Enable Stripe in admin settings and enter your <strong>Publishable key</strong> and <strong>Secret key</strong></li>
+                <li>For reliable payment confirmation, set up a webhook:
+                    <ul>
+                        <li>Stripe Dashboard → Developers → Webhooks → Add endpoint</li>
+                        <li>URL: <code>https://your-domain.com/stripe/webhook</code></li>
+                        <li>Events: <code>checkout.session.completed</code> (and related checkout events as needed)</li>
+                        <li>Copy the <strong>Signing secret</strong> into admin settings</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>PayPal</h3>
+            <ol>
+                <li>Create a PayPal Developer app at <a href="https://developer.paypal.com" target="_blank" rel="noopener">developer.paypal.com</a></li>
+                <li>Enter <strong>Client ID</strong> and <strong>Secret</strong></li>
+                <li>Set mode to <strong>Sandbox</strong> for testing or <strong>Live</strong> for production</li>
+            </ol>
+            <div class="alert alert-warning">
+                <strong>Windows / Laragon:</strong> If PayPal returns cURL error 77, download <a href="https://curl.se/ca/cacert.pem" target="_blank" rel="noopener">cacert.pem</a> and set <code>PAYPAL_CACERT_PATH</code> in <code>.env</code> to its absolute path.
+            </div>
+
+            <h3>Razorpay</h3>
+            <ol>
+                <li>Create a Razorpay account at <a href="https://razorpay.com" target="_blank" rel="noopener">razorpay.com</a></li>
+                <li>Enter <strong>Key ID</strong> and <strong>Key Secret</strong> in admin settings</li>
+                <li>Enable Razorpay; customers are redirected to a signed payment page</li>
+            </ol>
+
+            <h3>SSLCommerz</h3>
+            <ol>
+                <li>Register at <a href="https://www.sslcommerz.com" target="_blank" rel="noopener">sslcommerz.com</a></li>
+                <li>Enter <strong>Store ID</strong>, <strong>Store Password</strong>, and set Sandbox/Live mode</li>
+                <li>Configure success, fail, cancel, and IPN URLs in your SSLCommerz merchant panel to match your domain routes</li>
+            </ol>
+
+            <h3>Offline Payments</h3>
+            <ul>
+                <li><strong>Cash</strong> — Customers select cash payment; booking awaits manual confirmation</li>
+                <li><strong>Bank transfer</strong> — Display your bank instructions; customers complete transfer offline</li>
+            </ul>
+        </section>
+
+        <!-- EMAIL -->
+        <section id="email">
+            <h2>Email (SMTP)</h2>
+            <p>Configure outgoing mail under <strong>Admin → Settings → Email settings</strong>:</p>
+
+            <figure class="doc-figure">
+                <img src="assets/images/evmail_setting.png" alt="SMTP email settings" class="doc-screenshot">
+                <figcaption>Email settings — SMTP host, credentials, and from address</figcaption>
+            </figure>
+
+            <table>
+                <thead>
+                    <tr><th>Field</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>SMTP Host</td><td>smtp.gmail.com</td></tr>
+                    <tr><td>SMTP Port</td><td>587 (TLS) or 465 (SSL)</td></tr>
+                    <tr><td>Encryption</td><td>tls or ssl</td></tr>
+                    <tr><td>Username / Password</td><td>Your SMTP credentials</td></tr>
+                    <tr><td>From Address</td><td>noreply@yourdomain.com</td></tr>
+                </tbody>
+            </table>
+            <p>Booking confirmation emails are sent when registrations are confirmed. Per-event email subject and body can be customized in the event content settings.</p>
+            <p>For development, you may set <code>MAIL_MAILER=log</code> in <code>.env</code> to write emails to the log file instead of sending them.</p>
+        </section>
+
+        <!-- SEAT PLANNER -->
+        <section id="seat-planner">
+            <h2>Seat Planner</h2>
+            <p>Seat planning is available in <a href="https://lucrativeit.com/products/event-manager-plus" target="_blank" rel="noopener">Event Manager Plus</a> (premium). In the free edition, seat plan settings are shown as preview-only in the admin panel.</p>
+
+            <h3>Enable Site-wide</h3>
+            <p>Go to <strong>Admin → Settings → Site settings</strong> and enable <strong>Seat plan</strong>. This allows seat planning features across the application.</p>
+
+            <h3>Enable Per Event</h3>
+            <p>On the event <strong>Advanced</strong> step, turn on <strong>Enable seat plan for this event</strong>, then open the seat plan editor (or use <strong>Events → Seat plans</strong>).</p>
+
+            <figure class="doc-figure">
+                <img src="assets/images/event_seatplan.png" alt="Seat plan layout editor" class="doc-screenshot">
+                <figcaption>Seat plan editor — paint rows, aisles, and map seats to ticket types</figcaption>
+            </figure>
+
+            <p>Selected seat numbers appear on bookings, PDF tickets, and check-in screens.</p>
+        </section>
+
+        <!-- AI FEATURES -->
+        <section id="ai-features">
+            <h2>AI Features</h2>
+            <p>Report AI and Event Assistant use a configurable AI provider. Set this up under <strong>Admin → Settings → AI reports</strong>.</p>
+
+            <figure class="doc-figure">
+                <img src="assets/images/Aisettings.png" alt="AI reports provider settings" class="doc-screenshot">
+                <figcaption>AI reports — provider, API key, and model configuration</figcaption>
+            </figure>
+
+            <h3>Supported Providers</h3>
+            <table>
+                <thead>
+                    <tr><th>Provider</th><th>Default API Base</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>OpenAI</td><td>https://api.openai.com/v1</td></tr>
+                    <tr><td>DeepSeek</td><td>https://api.deepseek.com</td></tr>
+                    <tr><td>Anthropic (Claude)</td><td>https://api.anthropic.com/v1</td></tr>
+                    <tr><td>Google (Gemini)</td><td>https://generativelanguage.googleapis.com/v1beta</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Configuration Steps</h3>
+            <ol>
+                <li>Enable <strong>Report AI</strong> in settings</li>
+                <li>Select your provider and enter your API key</li>
+                <li>Optionally set a custom model name and API base URL override</li>
+                <li>Use <strong>Reports → AI report</strong> to ask questions about orders and bookings</li>
+                <li>Use <strong>Events → AI assistance</strong> to generate or refine event descriptions and content</li>
+            </ol>
+
+            <figure class="doc-figure">
+                <img src="assets/images/LLM%20reporting.png" alt="AI report assistant" class="doc-screenshot">
+                <figcaption>AI report — natural-language queries over booking data</figcaption>
+            </figure>
+
+            <div class="alert alert-info">
+                AI features are optional. The application works fully without configuring any AI provider.
+            </div>
+        </section>
+
+        <!-- CUSTOMER ACCOUNT -->
+        <section id="customer-account">
+            <h2>Customer Account</h2>
+            <p>Visitors can register at <code>/register</code> and sign in at <code>/login</code>. Logged-in customers can:</p>
+            <ul>
+                <li>View order history at <code>/account</code></li>
+                <li>Download ticket PDFs for their bookings</li>
+                <li>Update profile information</li>
+            </ul>
+            <p>Guest checkout is also supported — customers can book without an account and receive tickets by email.</p>
+        </section>
+
+        <!-- THEMES -->
+        <section id="themes">
+            <h2>Frontend Themes</h2>
+            <p>Switch the public site appearance under <strong>Admin → Settings → Site settings → Public site theme</strong>:</p>
+            <ul>
+                <li><strong>Default</strong> — Modern minimal landing layout</li>
+                <li><strong>Classic</strong> — Eventify-style homepage with hero, how-it-works, and FAQs</li>
+            </ul>
+
+            <figure class="doc-figure">
+                <img src="assets/images/site_settungs.png" alt="Site settings and theme selection" class="doc-screenshot">
+                <figcaption>Site settings — theme, branding, and seat planner toggle</figcaption>
+            </figure>
+
+            <p>Homepage SEO, hero background, copy, and FAQs are configured separately under <strong>Home settings</strong>:</p>
+
+            <figure class="doc-figure">
+                <img src="assets/images/home_settings.png" alt="Home settings SEO and hero" class="doc-screenshot">
+                <figcaption>Home settings — meta tags and Classic theme hero section</figcaption>
+            </figure>
+
+            <p>Theme assets live in <code>public/themes/</code>. Customize CSS files there if needed.</p>
+        </section>
+
+        <!-- CRON -->
+        <section id="cron">
+            <h2>Cron Jobs &amp; Queues</h2>
+            <p>By default, the application uses synchronous queue processing (<code>QUEUE_CONNECTION=sync</code>), which works without a cron job for most sites.</p>
+
+            <p>If you enable database queues for high-volume sites, add this cron entry:</p>
+            <pre><code>* * * * * cd /path/to/project && php artisan schedule:run >> /dev/null 2>&1</code></pre>
+
+            <p>And run a queue worker (via Supervisor or similar):</p>
+            <pre><code>php artisan queue:work --tries=3</code></pre>
+
+            <p>After installation, you may optionally switch in <code>.env</code>:</p>
+            <pre><code>SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=database</code></pre>
+            <p>These require that migrations have already been run (the installer handles this).</p>
+        </section>
+
+        <!-- TROUBLESHOOTING -->
+        <section id="troubleshooting">
+            <h2>Troubleshooting</h2>
+
+            <h3>500 Internal Server Error</h3>
+            <ul>
+                <li>Check <code>storage/logs/laravel.log</code> for details</li>
+                <li>Ensure <code>storage/</code> and <code>bootstrap/cache/</code> are writable</li>
+                <li>Run <code>php artisan config:clear</code> and <code>php artisan cache:clear</code></li>
+            </ul>
+
+            <h3>419 Page Expired (during install)</h3>
+            <ul>
+                <li>Go to <code>/install/setup</code> and submit the form again (do not refresh <code>/install/finish</code>)</li>
+                <li>Ensure <code>APP_KEY</code> is set in <code>.env</code></li>
+            </ul>
+
+            <h3>CSS/JS not loading</h3>
+            <ul>
+                <li>Confirm document root points to <code>public/</code></li>
+                <li>Run <code>npm run build</code> if assets are missing</li>
+            </ul>
+
+            <h3>Payment redirect fails</h3>
+            <ul>
+                <li>Verify <code>APP_URL</code> matches your live URL exactly</li>
+                <li>For Stripe, confirm webhook URL and signing secret</li>
+                <li>For PayPal on Windows, set <code>PAYPAL_CACERT_PATH</code></li>
+            </ul>
+
+            <h3>Images not uploading</h3>
+            <ul>
+                <li>Check PHP <code>upload_max_filesize</code> and <code>post_max_size</code></li>
+                <li>Ensure <code>public/uploads/</code> is writable</li>
+            </ul>
+
+            <h3>Re-run installer</h3>
+            <p>Delete the install lock file at <code>storage/app/install.lock</code> (path may vary) to access <code>/install</code> again. Only do this on a fresh or test environment.</p>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq">
+            <h2>FAQ</h2>
+
+            <h3>Can I use SQLite?</h3>
+            <p>The web installer requires MySQL or MariaDB. For development, you may configure SQLite manually in <code>.env</code> and run migrations via CLI.</p>
+
+            <h3>How do I change the admin password?</h3>
+            <p>Sign in to the admin panel and update your profile, or change the user record directly in the database.</p>
+
+            <h3>Where are uploaded files stored?</h3>
+            <p>Uploaded images are stored under <code>public/uploads/</code> and referenced from the database.</p>
+
+            <h3>Is the installer accessible after setup?</h3>
+            <p>No. Once installation completes, an install lock file is created and the installer routes are blocked. Use <code>php artisan install:lock</code> for manual deployments.</p>
+
+            <h3>Can I translate the application?</h3>
+            <p>Language files are in <code>lang/</code>. The default locale is English (<code>en</code>). Set <code>APP_LOCALE</code> in <code>.env</code> and add translation files as needed.</p>
+        </section>
+
+        <!-- CHANGELOG -->
+        <section id="changelog">
+            <h2>Changelog</h2>
+            <h3>Version 1.0 — Initial Release</h3>
+            <ul>
+                <li>Event management with recurring and custom schedules</li>
+                <li>Multi-gateway payments (Stripe, PayPal, Razorpay, SSLCommerz, offline)</li>
+                <li>PDF tickets with QR codes and check-in</li>
+                <li>Seat planner integration</li>
+                <li>Blog, CMS pages, organizers, speakers</li>
+                <li>Admin reports with CSV export and AI assistant</li>
+                <li>Web installer, customer accounts, dual frontend themes</li>
+            </ul>
+        </section>
+
+        <!-- SUPPORT -->
+        <section id="support">
+            <h2>Support &amp; Credits</h2>
+
+            <h3>Getting Help</h3>
+            <p>For support with the free edition, open an issue on GitHub. For the full commercial product, visit <a href="https://lucrativeit.com/products/event-manager-plus" target="_blank" rel="noopener">LucrativeIt</a>.</p>
+            <ul>
+                <li>Your purchase code</li>
+                <li>PHP version and hosting environment</li>
+                <li>Steps to reproduce the issue</li>
+                <li>Relevant lines from <code>storage/logs/laravel.log</code> (remove sensitive data)</li>
+            </ul>
+
+            <h3>Third-Party Packages</h3>
+            <table>
+                <thead>
+                    <tr><th>Package</th><th>Purpose</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Laravel Framework</td><td>Application framework</td></tr>
+                    <tr><td>barryvdh/laravel-dompdf</td><td>PDF ticket generation</td></tr>
+                    <tr><td>endroid/qr-code</td><td>QR codes on tickets</td></tr>
+                    <tr><td>stripe/stripe-php</td><td>Stripe payments</td></tr>
+                    <tr><td>razorpay/razorpay</td><td>Razorpay payments</td></tr>
+                    <tr><td>lucrativeit/laravel-seat-planner</td><td>Seat selection</td></tr>
+                </tbody>
+            </table>
+
+            <h3>License</h3>
+            <p>Event Manager Free is released under the MIT License. Event Manager Plus is a separate commercial product from LucrativeIt.</p>
+        </section>
+
+        <footer class="doc-footer">
+            <p>&copy; LucrativeIt — <a href="https://lucrativeit.com/products/event-manager-plus" target="_blank" rel="noopener">Purchase Event Manager Plus</a></p>
+        </footer>
+    </main>
+</div>
+
+<script>
+(function () {
+    var links = document.querySelectorAll('.sidebar nav a');
+    var sections = [];
+    links.forEach(function (link) {
+        var id = link.getAttribute('href');
+        if (id && id.charAt(0) === '#') {
+            var el = document.querySelector(id);
+            if (el) sections.push({ link: link, el: el });
+        }
+    });
+    function onScroll() {
+        var scrollY = window.scrollY || window.pageYOffset;
+        var current = sections[0];
+        sections.forEach(function (s) {
+            if (s.el.offsetTop - 80 <= scrollY) current = s;
+        });
+        links.forEach(function (l) { l.classList.remove('active'); });
+        if (current) current.link.classList.add('active');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
+</script>
+</body>
+</html>

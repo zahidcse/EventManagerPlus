@@ -1,0 +1,477 @@
+/* Classic Light event booking — loaded only when Classic Light is active (not Classic dark). */
+
+body.classic-light-site .attendee-ticket-block { margin-top: 0; padding-top: 0; border-top: 0; }
+body.classic-light-site .attendee-ticket-inline {
+  flex: 0 0 100%; width: 100%; min-width: 100%; margin-top: 2px; padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+body.classic-light-site .attendee-ticket-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 10px; width: 100%;
+}
+body.classic-light-site .attendee-ticket-grid.attendee-ticket-grid--inline { margin-top: 0; width: 100%; }
+body.classic-light-site .attendee-ticket-card {
+  min-width: 0; border: 1px solid var(--border); border-radius: 12px; padding: 14px;
+  background: var(--card); box-shadow: var(--shadow);
+}
+body.classic-light-site .attendee-ticket-title { font-weight: 800; font-size: 14px; margin: 0 0 4px; }
+body.classic-light-site .attendee-ticket-subtitle { font-size: 12px; color: var(--muted); margin: 0 0 12px; }
+body.classic-light-site .attendee-ticket-fields { display: grid; gap: 10px; }
+body.classic-light-site .attendee-ticket-fields label {
+  display: grid; gap: 5px; min-width: 0; font-size: 12px; font-weight: 700; color: var(--muted);
+}
+body.classic-light-site .attendee-ticket-fields input,
+body.classic-light-site .attendee-ticket-fields select {
+  width: 100%; box-sizing: border-box; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--card); color: inherit; padding: 9px 10px; font: inherit; outline: none;
+}
+body.classic-light-site .attendee-ticket-fields input:focus,
+body.classic-light-site .attendee-ticket-fields select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(214, 138, 93, 0.22);
+}
+
+body.classic-light-site .ep-layout .option:has(.attendee-custom-select.is-open),
+body.classic-light-site .attendee-ticket-card:has(.attendee-custom-select.is-open),
+body.classic-light-site .seat-plan-attendee-card:has(.attendee-custom-select.is-open),
+body.classic-light-site #seat-plan-picker-modal .seat-plan-attendee-card:has(.attendee-custom-select.is-open),
+body.classic-light-site #seat-plan-attendee-edit-modal .seat-plan-attendee-card:has(.attendee-custom-select.is-open) {
+  position: relative; z-index: 200; overflow: visible;
+}
+body.classic-light-site #seat-plan-picker-step-attendees,
+body.classic-light-site #seat-plan-picker-attendees {
+  overflow: visible;
+}
+body.classic-light-site .attendee-custom-select { position: relative; width: 100%; }
+body.classic-light-site .attendee-custom-select.is-open { z-index: 210; }
+body.classic-light-site .attendee-custom-select-native {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+body.classic-light-site .attendee-custom-select .attendee-custom-select-trigger {
+  width: 100%; box-sizing: border-box; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--card); color: inherit; padding: 9px 36px 9px 10px;
+  font: inherit; text-align: left; cursor: pointer; position: relative; outline: none;
+}
+body.classic-light-site .attendee-custom-select .attendee-custom-select-trigger.is-placeholder {
+  border: 1px solid var(--border); color: var(--muted);
+}
+body.classic-light-site .attendee-custom-select .attendee-custom-select-trigger::after {
+  content: ''; position: absolute; right: 14px; top: 50%; width: 7px; height: 7px;
+  margin-top: -5px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(45deg); opacity: .75; pointer-events: none;
+}
+body.classic-light-site .attendee-custom-select.is-open .attendee-custom-select-trigger,
+body.classic-light-site .attendee-custom-select .attendee-custom-select-trigger:focus-visible {
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 0 3px rgba(214, 138, 93, 0.22);
+}
+body.classic-light-site .attendee-custom-select.is-open .attendee-custom-select-trigger {
+  border: 1px solid var(--primary);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: var(--primary);
+  box-shadow: none;
+}
+body.classic-light-site .attendee-custom-select-menu {
+  position: absolute; z-index: 220; left: 0; right: 0; top: calc(100% - 1px);
+  margin: 0; padding: 4px; list-style: none;
+  border: 1px solid var(--primary);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 8px 8px;
+  background: var(--card);
+  box-shadow: 0 0 0 3px rgba(214, 138, 93, 0.18), 0 12px 32px rgba(45, 26, 18, 0.12);
+  max-height: 200px; overflow-y: auto;
+}
+body.classic-light-site .attendee-custom-select-menu.is-portal {
+  position: fixed; right: auto; z-index: 1400;
+}
+body.classic-light-site .attendee-custom-select-menu.is-portal.is-drop-up {
+  border-top: 1px solid var(--primary);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 0 0 3px rgba(214, 138, 93, 0.18), 0 -8px 24px rgba(45, 26, 18, 0.1);
+}
+body.classic-light-site #seat-plan-attendee-edit-modal .attendee-custom-select-menu,
+body.classic-light-site #seat-plan-attendee-edit-modal .attendee-custom-select-menu.is-portal {
+  background: var(--card);
+  color: var(--fg);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(214, 138, 93, 0.18), 0 12px 32px rgba(45, 26, 18, 0.14);
+}
+body.classic-light-site #seat-plan-attendee-edit-modal .attendee-custom-select-option:hover,
+body.classic-light-site #seat-plan-attendee-edit-modal .attendee-custom-select-option.is-selected {
+  background: rgba(214, 138, 93, 0.16);
+}
+body.classic-light-site .attendee-custom-select-menu[hidden] { display: none !important; }
+body.classic-light-site .attendee-custom-select-option {
+  padding: 8px 10px; border-radius: 6px; cursor: pointer; color: inherit;
+}
+body.classic-light-site .attendee-custom-select-option:hover,
+body.classic-light-site .attendee-custom-select-option.is-selected {
+  background: rgba(214, 138, 93, 0.14);
+}
+
+@media (max-width: 760px) {
+  body.classic-light-site .attendee-ticket-grid { grid-template-columns: 1fr; }
+}
+
+body.classic-light-site .seat-plan-stage {
+  margin: 0 auto 24px; max-width: 70%; text-align: center; padding: 10px 12px;
+  background: linear-gradient(180deg, rgba(214, 138, 93, 0.12), rgba(255, 249, 241, 0.6));
+  border: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  border-radius: 15px; letter-spacing: .28em;
+  font-weight: 700; font-size: 12px; color: var(--primary);
+}
+body.classic-light-site .seat-plan-wrap { overflow-x: auto; padding: 8px 0 16px; width: 100%; }
+body.classic-light-site .seat-plan-grid {
+  display: table !important; border-collapse: separate; border-spacing: 6px;
+  margin: 0 auto; width: auto;
+}
+body.classic-light-site .seat-plan-cell { display: table-cell; vertical-align: middle; text-align: center; padding: 0; }
+body.classic-light-site .seat-plan-row-label { color: var(--muted); font-size: 11px; padding: 0 6px; min-width: 20px; text-align: right; }
+body.classic-light-site .seat-plan-seat {
+  width: 34px; height: 34px; border-radius: 6px 6px 9px 9px; border: 1px solid var(--border);
+  background: var(--card-2); color: var(--fg); font-size: 10px; font-weight: 700; cursor: pointer; padding: 0;
+}
+body.classic-light-site .seat-plan-seat.has-ticket-color.is-available:not(.is-selected):not(:disabled) {
+  background: var(--seat-ticket-color);
+  border-color: var(--seat-ticket-color);
+  color: #1a1300;
+}
+body.classic-light-site .seat-plan-seat.is-booked,
+body.classic-light-site .seat-plan-seat.is-reserved,
+body.classic-light-site .seat-plan-seat.is-blocked {
+  opacity: .65; cursor: not-allowed; background: #94a3b8 !important; border-color: #64748b !important; color: #f8fafc !important;
+}
+body.classic-light-site .seat-plan-seat.is-booked { background: #b91c1c !important; border-color: #991b1b !important; }
+body.classic-light-site .seat-plan-seat.is-reserved { background: #a16207 !important; border-color: #854d0e !important; }
+body.classic-light-site .seat-plan-seat.is-selected {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--primary);
+}
+body.classic-light-site .seat-plan-seat.has-ticket-color.is-selected.is-available {
+  background: var(--seat-ticket-color);
+  border-color: var(--seat-ticket-color);
+  color: #1a1300 !important;
+}
+body.classic-light-site .seat-plan-seat:disabled { cursor: not-allowed; }
+body.classic-light-site .seat-plan-aisle,
+body.classic-light-site .seat-plan-empty { display: inline-block; width: 34px; height: 34px; }
+body.classic-light-site .seat-plan-legend {
+  display: flex; flex-wrap: nowrap; gap: 10px 14px; justify-content: center; align-items: center;
+  margin: 8px 0 18px; font-size: 12px; color: var(--muted);
+  overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch;
+}
+body.classic-light-site .seat-plan-legend-heading {
+  flex: 0 0 auto; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); white-space: nowrap;
+}
+body.classic-light-site .seat-plan-legend-item--status {
+  border-left: 1px solid var(--border); padding-left: 12px; margin-left: 2px;
+}
+body.classic-light-site .seat-plan-legend-item { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; white-space: nowrap; }
+body.classic-light-site .seat-plan-legend-label { display: inline-flex; align-items: center; gap: 5px; line-height: 1.25; white-space: nowrap; }
+body.classic-light-site .seat-plan-legend-name { font-weight: 700; color: inherit; }
+body.classic-light-site .seat-plan-legend-price { font-size: 11px; color: var(--muted); font-weight: 600; }
+body.classic-light-site .seat-plan-price-was { text-decoration: line-through; margin-right: 4px; opacity: .85; font-weight: 500; }
+body.classic-light-site .seat-plan-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; border: 1px solid var(--border); }
+body.classic-light-site .seat-plan-swatch.is-selected {
+  background: var(--primary); border-color: var(--primary-2);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px var(--primary);
+}
+body.classic-light-site .seat-plan-swatch.is-booked { background: #b91c1c; border-color: #991b1b; }
+body.classic-light-site .seat-plan-swatch.is-reserved { background: #a16207; border-color: #854d0e; }
+body.classic-light-site .seat-plan-swatch.is-blocked { background: #64748b; border-color: #475569; }
+body.classic-light-site .seat-plan-addons-heading { margin: 22px 0 8px; font-size: 16px; font-weight: 700; }
+body.classic-light-site .seat-plan-addon-options { margin-top: 0; }
+body.classic-light-site .seat-plan-attendees-section { margin-top: 22px; }
+body.classic-light-site .seat-plan-attendees-heading { margin: 0 0 12px; font-size: 16px; font-weight: 700; }
+body.classic-light-site .seat-plan-attendees {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 0;
+}
+body.classic-light-site .seat-plan-attendee-card {
+  border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: var(--card);
+}
+body.classic-light-site .seat-plan-attendee-card .attendee-ticket-fields {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+}
+@media (max-width: 760px) {
+  body.classic-light-site .seat-plan-attendees { grid-template-columns: 1fr; }
+  body.classic-light-site .seat-plan-attendee-card .attendee-ticket-fields { grid-template-columns: 1fr; }
+}
+
+body.classic-light-site .seat-plan-modal { position: fixed; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; padding: 16px; }
+body.classic-light-site .seat-plan-modal[hidden] { display: none !important; }
+body.classic-light-site .seat-plan-modal-backdrop { position: absolute; inset: 0; background: rgba(45, 26, 18, 0.45); }
+body.classic-light-site .seat-plan-modal-panel {
+  position: relative; z-index: 1; width: min(100%, 420px); border-radius: 12px; padding: 20px;
+  background: var(--card); color: var(--fg); border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+body.classic-light-site .seat-plan-modal-title { margin: 0 0 8px; font-size: 18px; font-weight: 700; }
+body.classic-light-site .seat-plan-modal-text { margin: 0 0 16px; font-size: 14px; color: var(--muted); line-height: 1.45; }
+body.classic-light-site .seat-plan-modal-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+body.classic-light-site .seat-plan-modal-btn {
+  border-radius: 8px; padding: 9px 14px; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent;
+}
+body.classic-light-site .seat-plan-modal-btn--cancel {
+  background: transparent; border-color: var(--border); color: inherit;
+}
+body.classic-light-site .seat-plan-modal-btn--confirm {
+  background: var(--primary); border-color: var(--primary); color: var(--primary-fg);
+}
+
+body.classic-light-site #seat-plan-booking .seat-plan-ticket-list--grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px; margin: 16px 0 0;
+}
+body.classic-light-site #seat-plan-booking .seat-plan-ticket-pick {
+  width: 100%; text-align: left; display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  padding: 16px 18px; border-radius: 14px; border: 1px solid var(--border);
+  border-top: 3px solid var(--ticket-color, var(--primary));
+  background: var(--card); cursor: pointer;
+  transition: border-color .2s, background .2s, box-shadow .2s, transform .15s;
+}
+body.classic-light-site #seat-plan-booking .seat-plan-ticket-pick:hover:not(:disabled) {
+  border-color: var(--ticket-color, var(--primary));
+  background: rgba(214, 138, 93, 0.1);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+body.classic-light-site #seat-plan-booking .seat-plan-ticket-pick.is-active {
+  border-color: var(--ticket-color, var(--primary));
+  background: rgba(214, 138, 93, 0.14);
+  box-shadow: 0 0 0 1px var(--ticket-color, var(--primary));
+}
+body.classic-light-site #seat-plan-booking .seat-plan-ticket-pick.is-disabled {
+  opacity: .55; cursor: not-allowed; transform: none;
+}
+body.classic-light-site .seat-plan-ticket-cta {
+  margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--primary); letter-spacing: .02em;
+}
+body.classic-light-site .seat-plan-open-map-btn {
+  display: inline-flex; align-items: center; justify-content: center; width: 100%;
+  margin: 14px 0 0; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--card); color: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+body.classic-light-site .seat-plan-open-map-btn:hover {
+  border-color: var(--primary); background: rgba(214, 138, 93, 0.1);
+}
+body.classic-light-site .seat-plan-ticket-pick-body {
+  display: flex; flex-direction: column; gap: 4px; width: 100%; min-width: 0;
+}
+body.classic-light-site .seat-plan-ticket-name { font-size: 15px; font-weight: 700; line-height: 1.25; }
+body.classic-light-site .seat-plan-ticket-desc { font-size: 12px; line-height: 1.35; color: var(--muted); }
+body.classic-light-site .seat-plan-ticket-rem { opacity: .9; }
+body.classic-light-site .seat-plan-ticket-price { font-size: 16px; font-weight: 700; color: var(--primary); margin-top: 4px; }
+body.classic-light-site .seat-plan-ticket-empty { grid-column: 1 / -1; margin: 0; }
+@media (max-width: 520px) {
+  body.classic-light-site #seat-plan-booking .seat-plan-ticket-list--grid { grid-template-columns: 1fr; }
+}
+
+body.classic-light-site.seat-plan-picker-open { overflow: hidden; }
+body.classic-light-site .seat-plan-picker-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214, 138, 93, 0.55) rgba(239, 224, 212, 0.5);
+  scrollbar-gutter: stable;
+}
+body.classic-light-site .seat-plan-picker-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+body.classic-light-site .seat-plan-picker-scroll::-webkit-scrollbar-track {
+  background: rgba(239, 224, 212, 0.5); border-radius: 999px; margin: 4px;
+}
+body.classic-light-site .seat-plan-picker-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--primary-2));
+  border-radius: 999px; border: 2px solid transparent; background-clip: padding-box;
+}
+body.classic-light-site .seat-plan-picker-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-2), var(--primary));
+  background-clip: padding-box;
+}
+body.classic-light-site .seat-plan-picker-scroll::-webkit-scrollbar-corner { background: transparent; }
+
+body.classic-light-site .seat-plan-picker-modal {
+  z-index: 1300; align-items: flex-start; padding: 24px 16px; overflow-y: auto;
+}
+body.classic-light-site .seat-plan-picker-panel {
+  position: relative; z-index: 1; width: min(100%, 1280px); max-height: min(92vh, 900px);
+  min-height: 0;
+  display: flex; flex-direction: column; border-radius: 16px; overflow: hidden;
+  background: var(--card); color: var(--fg); border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(45, 26, 18, 0.18);
+}
+body.classic-light-site .seat-plan-picker-header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 20px 0;
+  flex-shrink: 0;
+}
+body.classic-light-site .seat-plan-picker-step {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+body.classic-light-site .seat-plan-picker-header-main { min-width: 0; flex: 1 1 auto; }
+body.classic-light-site .seat-plan-picker-session-date {
+  margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: .02em;
+  color: var(--primary); text-transform: none;
+}
+body.classic-light-site .seat-plan-picker-close {
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+  background: var(--card); color: var(--fg); font-size: 22px; line-height: 1; cursor: pointer; flex-shrink: 0;
+}
+body.classic-light-site .seat-plan-picker-subtitle {
+  margin: 8px 20px 0; padding-left: 12px; border-left: 4px solid var(--primary); font-size: 14px;
+  flex-shrink: 0;
+}
+body.classic-light-site .seat-plan-picker-body {
+  padding: 8px 20px 16px; overflow: auto; flex: 1 1 auto; min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}
+body.classic-light-site .seat-plan-picker-body .seat-plan-wrap {
+  overflow-x: auto; padding: 8px 4px 16px; margin: 0 -4px;
+}
+body.classic-light-site .seat-plan-picker-body .seat-plan-wrap,
+body.classic-light-site .seat-plan-picker-body .seat-plan-legend {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214, 138, 93, 0.45) rgba(239, 224, 212, 0.5);
+}
+body.classic-light-site .seat-plan-picker-body .seat-plan-wrap::-webkit-scrollbar,
+body.classic-light-site .seat-plan-picker-body .seat-plan-legend::-webkit-scrollbar { width: 8px; height: 8px; }
+body.classic-light-site .seat-plan-picker-body .seat-plan-wrap::-webkit-scrollbar-thumb,
+body.classic-light-site .seat-plan-picker-body .seat-plan-legend::-webkit-scrollbar-thumb {
+  background: rgba(214, 138, 93, 0.55); border-radius: 999px;
+}
+body.classic-light-site .seat-plan-picker-step[hidden] { display: none !important; }
+body.classic-light-site .seat-plan-picker-attendees-intro {
+  margin: 8px 20px 0; font-size: 14px; color: var(--muted); flex-shrink: 0;
+}
+body.classic-light-site .seat-plan-picker-body--attendees {
+  padding-top: 12px; overflow: auto; min-height: 0;
+}
+body.classic-light-site .seat-plan-picker-body--attendees .seat-plan-attendees {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
+}
+@media (max-width: 760px) {
+  body.classic-light-site .seat-plan-picker-body--attendees .seat-plan-attendees { grid-template-columns: 1fr; }
+}
+body.classic-light-site .seat-plan-picker-footer {
+  display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px 18px;
+  border-top: 1px solid var(--border); background: var(--card-2);
+  flex-shrink: 0;
+}
+body.classic-light-site .seat-plan-picker-footer[hidden] { display: none !important; }
+body.classic-light-site .seat-plan-modal-btn--confirm:disabled { opacity: .45; cursor: not-allowed; }
+body.classic-light-site .seat-plan-picker-modal .seat-plan-modal-btn--confirm {
+  background: var(--primary); border-color: var(--primary); color: var(--primary-fg);
+}
+body.classic-light-site .seat-plan-ticket-dot {
+  width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+body.classic-light-site .seat-plan-post-selection {
+  margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);
+}
+body.classic-light-site .seat-plan-seat.is-tier-muted { opacity: .28; cursor: not-allowed; filter: grayscale(0.6); }
+body.classic-light-site #seat-plan-attendees input,
+body.classic-light-site #seat-plan-attendees select,
+body.classic-light-site #seat-plan-attendees textarea,
+body.classic-light-site #seat-plan-picker-attendees input,
+body.classic-light-site #seat-plan-picker-attendees select,
+body.classic-light-site #seat-plan-picker-attendees textarea { pointer-events: auto; }
+
+body.classic-light-site .order-seat-dot {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(45, 26, 18, 0.15);
+}
+body.classic-light-site .order-line-seat {
+  display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap;
+}
+body.classic-light-site .order-seat-body { display: grid; gap: 2px; min-width: 0; flex: 1 1 auto; }
+body.classic-light-site .order-seat-actions {
+  display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0;
+}
+body.classic-light-site .order-seat-action-btn {
+  display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0;
+  border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: inherit;
+  cursor: pointer; font-size: 14px; line-height: 1;
+  transition: border-color .15s, background .15s, color .15s;
+}
+body.classic-light-site .order-seat-action-btn:hover {
+  border-color: var(--primary); background: rgba(214, 138, 93, 0.12); color: var(--primary);
+}
+body.classic-light-site .order-seat-action-btn--remove:hover {
+  border-color: #f87171; background: rgba(248, 113, 113, 0.12); color: #dc2626;
+}
+body.classic-light-site .order-seat-action-btn svg { width: 14px; height: 14px; display: block; }
+
+body.classic-light-site .seat-plan-attendee-edit-modal {
+  z-index: 1350; align-items: flex-start; padding: 24px 16px; overflow-y: auto;
+}
+body.classic-light-site .seat-plan-attendee-edit-modal .seat-plan-modal-backdrop {
+  background: rgba(45, 26, 18, 0.55);
+}
+body.classic-light-site .seat-plan-attendee-edit-panel {
+  position: relative; z-index: 1; width: min(100%, 520px); max-height: min(88vh, 720px);
+  display: flex; flex-direction: column; border-radius: 16px; overflow: hidden;
+  background: var(--card); color: var(--fg); border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(45, 26, 18, 0.18);
+}
+body.classic-light-site .seat-plan-attendee-edit-header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 20px 0;
+}
+body.classic-light-site .seat-plan-attendee-edit-header-main { min-width: 0; flex: 1 1 auto; }
+body.classic-light-site .seat-plan-attendee-edit-modal .seat-plan-modal-title {
+  margin: 0; font-size: 18px; font-weight: 700; color: var(--fg);
+}
+body.classic-light-site .seat-plan-attendee-edit-subtitle {
+  margin: 8px 0 0; padding-left: 12px; border-left: 4px solid var(--primary);
+  font-size: 14px; color: var(--muted); line-height: 1.45;
+}
+body.classic-light-site .seat-plan-attendee-edit-body {
+  padding: 16px 20px; overflow-y: auto; flex: 1 1 auto; min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}
+body.classic-light-site .seat-plan-attendee-edit-mount .seat-plan-attendee-card {
+  margin: 0; border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: var(--card-2);
+}
+body.classic-light-site .seat-plan-attendee-edit-mount .attendee-ticket-title { color: var(--fg); font-weight: 800; }
+body.classic-light-site .seat-plan-attendee-edit-mount .attendee-ticket-subtitle { color: var(--muted); }
+body.classic-light-site .seat-plan-attendee-edit-mount .attendee-ticket-fields label { color: var(--muted); }
+body.classic-light-site .seat-plan-attendee-edit-mount input,
+body.classic-light-site .seat-plan-attendee-edit-mount .attendee-custom-select .attendee-custom-select-trigger {
+  background: var(--card); border-color: var(--border); color: var(--fg);
+}
+body.classic-light-site .seat-plan-attendee-edit-mount input:focus,
+body.classic-light-site .seat-plan-attendee-edit-mount .attendee-custom-select.is-open .attendee-custom-select-trigger,
+body.classic-light-site .seat-plan-attendee-edit-mount .attendee-custom-select .attendee-custom-select-trigger:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(214, 138, 93, 0.22);
+}
+body.classic-light-site .seat-plan-attendee-edit-mount .attendee-ticket-fields { grid-template-columns: 1fr; }
+body.classic-light-site .seat-plan-attendee-edit-footer { margin-top: 0; }
+body.classic-light-site .seat-plan-attendee-edit-modal .seat-plan-modal-btn--cancel {
+  background: transparent; border-color: var(--border); color: var(--fg);
+}
+body.classic-light-site .seat-plan-attendee-edit-modal .seat-plan-modal-btn--cancel:hover {
+  border-color: var(--primary); background: rgba(214, 138, 93, 0.1); color: var(--primary);
+}
+body.classic-light-site .seat-plan-attendee-edit-modal .seat-plan-modal-btn--confirm {
+  background: var(--primary); border-color: var(--primary); color: var(--primary-fg);
+}
+body.classic-light-site .seat-plan-attendee-edit-modal .seat-plan-modal-btn--confirm:hover {
+  background: var(--primary-2); border-color: var(--primary-2);
+}
+body.classic-light-site .order-seat-primary { font-weight: 700; font-size: 13px; }
+body.classic-light-site .order-seat-attendee { font-size: 12px; color: var(--muted); }
+body.classic-light-site .order-seat-type {
+  font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+}
+
+/* Sidebar booking CTA + icons (event-public.css classic purple defaults) */
+body.classic-light-site .ep-layout.ep-theme-classic .sidebar-event-info {
+  background: var(--card);
+  border-color: var(--border);
+}
+body.classic-light-site .ep-layout.ep-theme-classic .sidebar-event-info-icon {
+  color: var(--primary);
+}

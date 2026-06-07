@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # If the app lives in a subfolder (e.g. http://localhost/EventManagerLaravel/),
+    # uncomment and set the path to match your URL (leading + trailing slash).
+    # RewriteBase /EventManagerLaravel/
+
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
