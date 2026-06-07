@@ -56,7 +56,25 @@
         <section id="introduction">
             <h2>Introduction</h2>
             <p><strong>Event Manager Free</strong> is the open-source edition of our event management and ticketing platform built with Laravel. It lets you create and publish single events, sell tickets online via Stripe, manage bookings, and run your site from a modern admin dashboard.</p>
-            <p>Some features (extra themes, seat plans, recurring events, PDF ticket customization, attendee forms, and additional payment gateways) are preview-only in this edition. Upgrade to <a href="https://lucrativeit.com/products/event-manager-plus" target="_blank" rel="noopener"><strong>Event Manager Plus</strong></a> to unlock the full product.</p>
+            <p>Some admin settings (Classic Light theme, seat plans, recurring/custom schedules, early-bird pricing, add-on services, PDF ticket field customization, attendee forms, and extra payment gateways) are <strong>preview-only</strong> in this edition. PDF tickets still generate and download with the default layout. Online checkout uses <strong>Stripe</strong> only. Upgrade to <a href="https://lucrativeit.com/products/event-manager-plus" target="_blank" rel="noopener"><strong>Event Manager Plus</strong></a> to unlock the full product.</p>
+
+            <h3>Free vs premium</h3>
+            <table>
+                <thead>
+                    <tr><th>Feature</th><th>Free</th><th>Premium</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Public site theme</td><td>Default &amp; Classic</td><td>Classic Light and more</td></tr>
+                    <tr><td>Event schedule</td><td>Single event (preview recurring/custom)</td><td>Recurring &amp; custom dates</td></tr>
+                    <tr><td>Early bird pricing</td><td>Preview only</td><td>Per-ticket discounted windows</td></tr>
+                    <tr><td>Additional services</td><td>Preview only</td><td>Sell add-ons at checkout</td></tr>
+                    <tr><td>Seat plans</td><td>Preview only</td><td>Full seat layout &amp; booking</td></tr>
+                    <tr><td>PDF tickets</td><td>Printable (settings preview only)</td><td>Per-event customization</td></tr>
+                    <tr><td>Attendee form settings</td><td>Preview only</td><td>Per-ticket fields</td></tr>
+                    <tr><td>Online payments</td><td>Stripe</td><td>Stripe, PayPal, Razorpay, SSLCommerz</td></tr>
+                    <tr><td>Offline payments</td><td>Preview only</td><td>Cash &amp; bank transfer</td></tr>
+                </tbody>
+            </table>
 
             <h3>What You Get</h3>
             <ul>
@@ -64,9 +82,9 @@
                 <li>Web-based installation wizard (<code>/install</code>)</li>
                 <li>Admin dashboard at <code>/admin</code></li>
                 <li>Public event listing, booking, blog, and CMS pages</li>
-                <li>Multiple payment gateways (Stripe, PayPal, Razorpay, SSLCommerz, cash, bank transfer)</li>
-                <li>PDF ticket generation with QR codes</li>
-                <li>Seat planner integration (optional)</li>
+                <li>Stripe online payments (PayPal, Razorpay, SSLCommerz, cash, and bank transfer in premium)</li>
+                <li>PDF ticket generation and download with QR codes (custom fields in premium)</li>
+                <li>Seat planner preview in admin (full booking in premium)</li>
                 <li>AI report assistant and event assistant (optional)</li>
             </ul>
 

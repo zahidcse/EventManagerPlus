@@ -17,12 +17,12 @@ Open-source event ticketing and registration built with **Laravel 12** and **PHP
 | Early bird pricing | Preview only | Per-ticket discounted windows |
 | Additional services | Preview only | Sell add-ons at checkout |
 | Seat plans | Preview only | Full seat layout & booking |
-| PDF ticket settings | Preview only | Per-event customization |
+| PDF tickets | Printable (settings preview only) | Per-event customization |
 | Attendee form settings | Preview only | Per-ticket fields |
 | Online payments | Stripe | Stripe, PayPal, Razorpay, SSLCommerz |
 | Offline payments | Preview only | Cash & bank transfer |
 
-Premium-only settings stay visible in the admin panel with an **“Available in premium version”** badge.
+Tickets download as PDF with the default layout in the free edition; only per-event PDF field and logo settings are preview-only. Premium-only settings stay visible in the admin panel with an **“Available in premium version”** badge.
 
 ---
 
